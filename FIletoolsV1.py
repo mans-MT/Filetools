@@ -70,7 +70,7 @@ if input('Welcome to Filetools! Would you like to start?\t').lower() in ['yes','
             print("Error: Invalid Operation")
         repeat = input("Would you like to carry out more operations on the same file (y/n) ?\t")
         if repeat.lower() == 'n':
-            print('Thank you for using FileTools\nVisit github.com/mans-birb/filetools to leave feedback and recieve updates!')
+            print('Thank you for using FileTools\nVisit github.com/mans-MT/Filetools to leave feedback and recieve updates!')
             break
 else:
     active = 0
