@@ -12,9 +12,9 @@ active = 1
 
 def func_write(filename):
     data = input("Enter data to be written into file:")
-    with open(filename, "w") as pq:
+    with open(filename, "w+") as pq:
         pq.write(data)
-    with open(filename, "r") as pq:
+        pq.seek(0)
         test = pq.read()
     if test == data:
         print(f"Successfully wrote {len(data)} characters into {filename}")
@@ -25,9 +25,9 @@ def func_read(filename):
     print(f'\t{filename} : {a}')
 
 def func_clear(filename):
-    with open(filename, "w") as pq:
+    with open(filename, "w+") as pq:
         pq.write('')
-    with open(filename, "r") as pq:
+        pq.seek(0)
         if len(pq.read()) == 0:
             print(f"Successfully cleared data from file {filename}.")
         else:
@@ -35,11 +35,8 @@ def func_clear(filename):
 
 def func_append(filename):
     data = input("Enter data to be appended to file:")
-    with open(filename, "r") as pq:
-        initial = pq.read()
-        final = initial + data
-    with open(filename, "w") as pq:
-        pq.write(final)
+    with open(filename, "a") as pq:
+        pq.write(data)
     print(f"Successfully appended {len(data)} characters into {filename}")
     
 def func_encrypt(filename):
@@ -86,9 +83,7 @@ for f in os.listdir():
         if i in a:
             files.append(f)
                       
-print('''╭────────────╮
-│  FileTools │
-╰────────────╯''')
+print('''╭────────────╮\n│  FileTools │\n╰────────────╯''')
 if input('Welcome to Filetools! Would you like to start?\t').lower() in ['yes','y','1','']:
     print('Select file to carry operation on:\n')
     f_name = input(("\t\n".join(f" - {f}" for f in files[:5]))+f' ... ({len(files)-5} more)\t')
@@ -105,10 +100,12 @@ if input('Welcome to Filetools! Would you like to start?\t').lower() in ['yes','
             func_clear(f_name)
         elif op == 5:
             print(f'WARNING: THIS IS AN EXPERIMENTAL FEATURE AND MAY LEAD TO DATA LOSS. BACK UP YOUR FILES BEFORE USING THIS.')
-            func_encrypt(f_name)
+            if input('Do you want to proceed with encryption?\t').lower() in ['yes', 'y', '1', '']:
+                func_encrypt(f_name)
         elif op == 6:
             print(f'WARNING: THIS IS AN EXPERIMENTAL FEATURE AND MAY LEAD TO DATA LOSS. BACK UP YOUR FILES BEFORE USING THIS.')
-            func_decrypt(f_name)
+            if input('Do you want to proceed with decryption?\t').lower() in ['yes', 'y', '1', '']:
+                func_decrypt(f_name)
         else:
             print("Error: Invalid Operation")
         repeat = input("\nWould you like to carry out more operations on the same file (Y/n) ?\t")
